@@ -19,6 +19,7 @@ struct Beasiswa {
 };
 Beasiswa* headBeasiswa = NULL;
 Beasiswa* tailBeasiswa = NULL;
+
 void tambahAspirasi() {
     Aspirasi* nodeBaru = new Aspirasi;
     cout << "\n--- Tambah Aspirasi / Keluhan ---" << endl;
@@ -51,6 +52,36 @@ void tambahBeasiswa() {
     cout << "Data pengajuan beasiswa masuk ke dalam antrean (Tail)!" << endl;
 }
 
+void cariData() {
+    char cariNIM[20];
+    cout << "\nMasukkan NIM yang ingin dicari: ";
+    cin >> cariNIM;
+    
+    bool ditemukan = false;
+    
+    Aspirasi* tempA = headAspirasi;
+    while (tempA != NULL) {
+        if (strcmp(tempA->nim, cariNIM) == 0) {
+            cout << "[Ditemukan di Data Aspirasi] Keluhan: " << tempA->keluhan << endl;
+            ditemukan = true;
+        }
+        tempA = tempA->next;
+    }
+    
+    Beasiswa* tempB = headBeasiswa;
+    while (tempB != NULL) {
+        if (strcmp(tempB->nim, cariNIM) == 0) {
+            cout << "[Ditemukan di Data Beasiswa] Nama: " << tempB->nama 
+                 << " | IPK: " << tempB->ipk << " | Urgensi: " << tempB->urgensi << endl;
+            ditemukan = true;
+        }
+        tempB = tempB->next;
+    }
+    
+    if (!ditemukan) {
+        cout << "Data dengan NIM " << cariNIM << " tidak ditemukan." << endl;
+    }
+}
 
 void urutkanBeasiswa() {
     if (headBeasiswa == NULL || headBeasiswa->next == NULL) {
@@ -94,7 +125,28 @@ void urutkanBeasiswa() {
     cout << "Data beasiswa berhasil diurutkan berdasarkan IPK (Tertinggi ke Terendah)!" << endl;
 }
 
+void tampilkanAspirasi() {
+    cout << "\n--- Riwayat Aspirasi Mahasiswa ---" << endl;
+    if (headAspirasi == NULL) { cout << "Data Kosong." << endl; return; }
+    
+    Aspirasi* temp = headAspirasi;
+    while (temp != NULL) {
+        cout << "NIM: " << temp->nim << " | Keluhan: " << temp->keluhan << endl;
+        temp = temp->next;
+    }
+}
 
+void tampilkanBeasiswa() {
+    cout << "\n--- Antrean Pengajuan Beasiswa ---" << endl;
+    if (headBeasiswa == NULL) { cout << "Data Kosong." << endl; return; }
+    
+    Beasiswa* temp = headBeasiswa;
+    while (temp != NULL) {
+        cout << "NIM: " << temp->nim << " | Nama: " << temp->nama 
+             << " | IPK: " << temp->ipk << " | Urgensi: " << temp->urgensi << endl;
+        temp = temp->next;
+    }
+}
 
 void simpanData() {
     FILE* file = fopen("data_advokasi.txt", "w");
@@ -116,6 +168,39 @@ void simpanData() {
     
     fclose(file);
     cout << "\nData berhasil disimpan ke dalam data_advokasi.txt!" << endl;
+}
+
+void muatData() {
+    FILE* file = fopen("data_advokasi.txt", "r");
+    if (file == NULL) {
+        cout << "File data belum ada. Memulai program dari awal." << endl;
+        return;
+    }
+    
+    char tipe[20];
+    while (fscanf(file, "%s", tipe) != EOF) {
+        if (strcmp(tipe, "ASPIRASI") == 0) {
+            Aspirasi* nodeBaru = new Aspirasi;
+            fscanf(file, "%s %s", nodeBaru->nim, nodeBaru->keluhan);
+            nodeBaru->next = headAspirasi;
+            headAspirasi = nodeBaru;
+            
+        } else if (strcmp(tipe, "BEASISWA") == 0) {
+            Beasiswa* nodeBaru = new Beasiswa;
+            fscanf(file, "%s %s %f %d", nodeBaru->nim, nodeBaru->nama, &nodeBaru->ipk, &nodeBaru->urgensi);
+            nodeBaru->next = NULL;
+            
+            if (headBeasiswa == NULL) {
+                headBeasiswa = nodeBaru;
+                tailBeasiswa = nodeBaru;
+            } else {
+                tailBeasiswa->next = nodeBaru;
+                tailBeasiswa = nodeBaru;
+            }
+        }
+    }
+    fclose(file);
+    cout << "Data historis berhasil dimuat!" << endl;
 }
 
 int main(int argc, char **argv)
