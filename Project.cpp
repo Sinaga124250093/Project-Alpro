@@ -126,7 +126,7 @@ void urutkanBeasiswa() {
 }
 
 void tampilkanAspirasi() {
-    cout << "\n--- Riwayat Aspirasi Mahasiswa ---" << endl;
+    cout << "--- Riwayat Aspirasi Mahasiswa ---" << endl;
     if (headAspirasi == NULL) { cout << "Data Kosong." << endl; return; }
     
     Aspirasi* temp = headAspirasi;
@@ -137,7 +137,7 @@ void tampilkanAspirasi() {
 }
 
 void tampilkanBeasiswa() {
-    cout << "\n--- Antrean Pengajuan Beasiswa ---" << endl;
+    cout << "--- Antrean Pengajuan Beasiswa ---" << endl;
     if (headBeasiswa == NULL) { cout << "Data Kosong." << endl; return; }
     
     Beasiswa* temp = headBeasiswa;
@@ -203,9 +203,40 @@ void muatData() {
     cout << "Data historis berhasil dimuat!" << endl;
 }
 
-int main(int argc, char **argv)
-{
-	
-	return 0;
+int main() {
+    muatData(); 
+    int pilihan;
+    
+    do {
+        cout << "=============================================" << endl;
+        cout << "     SISTEM MANAJEMEN ADVOKASI MAHASISWA     " << endl;
+        cout << "=============================================" << endl;
+        cout << "1. Tambah Keluhan/Aspirasi" << endl;
+        cout << "2. Ajukan Beasiswa" << endl;
+        cout << "3. Lihat Semua Aspirasi" << endl;
+        cout << "4. Lihat Antrean Beasiswa";
+        cout << "5. Urutkan Beasiswa Berdasarkan IPK" << endl;
+        cout << "6. Cari Status Berdasarkan NIM" << endl;
+        cout << "7. Simpan Data & Keluar" << endl;
+        cout << "=============================================" << endl;
+        cout << "Pilihan Anda: ";
+        cin >> pilihan;
+        
+        switch (pilihan) {
+            case 1: tambahAspirasi(); break;
+            case 2: tambahBeasiswa(); break;
+            case 3: tampilkanAspirasi(); break;
+            case 4: tampilkanBeasiswa(); break;
+            case 5: urutkanBeasiswa(); break;
+            case 6: cariData(); break;
+            case 7: 
+                simpanData(); 
+                cout << "Program selesai. Data tersimpan." << endl;
+                break;
+            default: cout << "Pilihan tidak valid!" << endl;
+        }
+    } while (pilihan != 7);
+    
+    return 0;
 }
 
