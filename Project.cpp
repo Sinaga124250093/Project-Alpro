@@ -96,6 +96,28 @@ void urutkanBeasiswa() {
 
 
 
+void simpanData() {
+    FILE* file = fopen("data_advokasi.txt", "w");
+    if (file == NULL) {
+        cout << "Gagal membuat file!" << endl; return;
+    }
+    
+    Aspirasi* tempA = headAspirasi;
+    while (tempA != NULL) {
+        fprintf(file, "ASPIRASI %s %s\n", tempA->nim, tempA->keluhan);
+        tempA = tempA->next;
+    }
+    
+    Beasiswa* tempB = headBeasiswa;
+    while (tempB != NULL) {
+        fprintf(file, "BEASISWA %s %s %.2f %d\n", tempB->nim, tempB->nama, tempB->ipk, tempB->urgensi);
+        tempB = tempB->next;
+    }
+    
+    fclose(file);
+    cout << "\nData berhasil disimpan ke dalam data_advokasi.txt!" << endl;
+}
+
 int main(int argc, char **argv)
 {
 	
