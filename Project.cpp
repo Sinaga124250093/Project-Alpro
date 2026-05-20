@@ -52,6 +52,47 @@ void tambahBeasiswa() {
 }
 
 
+void urutkanBeasiswa() {
+    if (headBeasiswa == NULL || headBeasiswa->next == NULL) {
+        cout << "Data belum cukup untuk diurutkan." << endl;
+        return;
+    }
+    
+    bool swapped;
+    Beasiswa* ptr1;
+    Beasiswa* lptr = NULL;
+    
+    do {
+        swapped = false;
+        ptr1 = headBeasiswa;
+        
+        while (ptr1->next != lptr) {
+            if (ptr1->ipk < ptr1->next->ipk) { 
+                char tempNim[20], tempNama[50];
+                strcpy(tempNim, ptr1->nim);
+                strcpy(tempNama, ptr1->nama);
+                float tempIpk = ptr1->ipk;
+                int tempUrgensi = ptr1->urgensi;
+                
+                strcpy(ptr1->nim, ptr1->next->nim);
+                strcpy(ptr1->nama, ptr1->next->nama);
+                ptr1->ipk = ptr1->next->ipk;
+                ptr1->urgensi = ptr1->next->urgensi;
+                
+                strcpy(ptr1->next->nim, tempNim);
+                strcpy(ptr1->next->nama, tempNama);
+                ptr1->next->ipk = tempIpk;
+                ptr1->next->urgensi = tempUrgensi;
+                
+                swapped = true;
+            }
+            ptr1 = ptr1->next;
+        }
+        lptr = ptr1;
+    } while (swapped);
+    
+    cout << "Data beasiswa berhasil diurutkan berdasarkan IPK (Tertinggi ke Terendah)!" << endl;
+}
 
 
 
