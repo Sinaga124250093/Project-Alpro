@@ -214,7 +214,7 @@ int main() {
         cout << "1. Tambah Keluhan/Aspirasi" << endl;
         cout << "2. Ajukan Beasiswa" << endl;
         cout << "3. Lihat Semua Aspirasi" << endl;
-        cout << "4. Lihat Antrean Beasiswa";
+        cout << "4. Lihat Antrean Beasiswa" << endl;
         cout << "5. Urutkan Beasiswa Berdasarkan IPK" << endl;
         cout << "6. Cari Status Berdasarkan NIM" << endl;
         cout << "7. Simpan Data & Keluar" << endl;
